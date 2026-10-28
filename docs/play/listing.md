@@ -18,6 +18,9 @@ this one are the graphics: `icon-512.png` and `feature-graphic.png`, both made b
   to 1080×2160 (drop the status and navigation bars) or frame them. Prefer the app's own screens:
   Ranks, a Calc result, Saved, Scan's "What the chip says", the card. Keep game artwork small, and
   paint out any "caught … around <place>" line.
+  **Made 2026-10-28:** `screenshots/1-chip.png` to `6-saved.png` (chip, card, appraise, ranks, calc,
+  saved), 720×1405, status and navigation bars cropped, the appraise shot's catch place painted out.
+  The same set is the screenshot gallery on plumcometlabs.com/ivlens.
 
 ### Full description (4,000 max)
 
