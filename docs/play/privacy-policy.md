@@ -1,6 +1,6 @@
 # IV Lens privacy policy
 
-*Plum Comet Labs · last updated 27 October 2026*
+*Plum Comet Labs · last updated 28 October 2026*
 
 **In short: IV Lens doesn't collect, keep or share any personal data. It has no internet access,
 so nothing it sees can leave your phone.**
@@ -44,6 +44,6 @@ If this policy changes, the new version will be posted here with its date.
 
 ## Contact
 
-Plum Comet Labs: [Discord](https://discord.gg/VvvbhuxmfF) · [plumcometlabs.com](https://plumcometlabs.com)
+Plum Comet Labs: [info@plumcometlabs.com](mailto:info@plumcometlabs.com) · [Discord](https://discord.gg/VvvbhuxmfF) · [plumcometlabs.com](https://plumcometlabs.com)
 
 *IV Lens is a fan-made tool and isn't affiliated with Niantic, Nintendo or The Pokémon Company.*
