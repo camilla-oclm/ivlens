@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Made by tools/make_icons.py from docs/brand/ivlens-arc.svg; edit that, not this. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp" android:height="24dp"
+    android:viewportWidth="53.5" android:viewportHeight="53.5">
+    <group android:translateX="-22.25" android:translateY="-26.5">
+        <path android:pathData="M28,64 A26,26 0 0,1 55.51,38.04"
+            android:fillColor="#00000000"
+            android:strokeColor="#FFFFFFFF"
+            android:strokeWidth="7"
+            android:strokeLineCap="round" />
+        <path android:pathData="M60.5,41.5 a6.5,6.5 0 1,0 13,0 a6.5,6.5 0 1,0 -13,0"
+            android:fillColor="#FFFFFFFF" />
+        <path android:pathData="M41.51,72L41.51,54.8L47.04,54.8L47.04,72ZM55.41,72L49.31,54.8L55.21,54.8L57.59,62.75Q57.69,63.08 57.86,63.7Q58.04,64.33 58.25,65.03Q58.46,65.72 58.61,66.3L58.81,66.3Q58.96,65.78 59.16,65.1Q59.36,64.42 59.55,63.79Q59.74,63.15 59.84,62.75L62.24,54.8L67.89,54.8L61.81,72Z"
+            android:fillColor="#FFFFFFFF" />
+    </group>
+</vector>

@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="18 18 72 72" width="512" height="512" role="img" aria-label="Sprout whose leaves are three stat bars">
+<rect x="0" y="0" width="108" height="108" fill="#E4E8FB"></rect>
+<path d="M54 84 C 54 72, 50.5 60, 54 36" fill="none" stroke="#1E2A78" stroke-width="4" stroke-linecap="round"></path>
+<rect x="58.5" y="64.5" width="24" height="9" rx="4.5" transform="rotate(-18 56 66.5)" fill="#E4E8FB"></rect>
+<rect x="56" y="62" width="24" height="9" rx="4.5" transform="rotate(-18 56 66.5)" fill="#E4E8FB" stroke="#1E2A78" stroke-width="2.2"></rect>
+<rect x="34.5" y="52.5" width="20" height="9" rx="4.5" transform="rotate(18 52 54.5)" fill="#E4E8FB"></rect>
+<rect x="32" y="50" width="20" height="9" rx="4.5" transform="rotate(18 52 54.5)" fill="#E4E8FB" stroke="#1E2A78" stroke-width="2.2"></rect>
+<rect x="58.5" y="40.5" width="15" height="8" rx="4" transform="rotate(-24 56 42)" fill="#E4E8FB"></rect>
+<rect x="56" y="38" width="15" height="8" rx="4" transform="rotate(-24 56 42)" fill="#E4E8FB" stroke="#1E2A78" stroke-width="2.2"></rect>
+<circle cx="54" cy="33" r="4.5" fill="#E4E8FB" stroke="#1E2A78" stroke-width="2.2"></circle>
+</svg>

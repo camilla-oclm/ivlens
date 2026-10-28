@@ -1,0 +1,14 @@
+build/
+.gradle/
+.kotlin/
+local.properties
+*.iml
+.idea/
+# Signing key: back it up outside the repo, never commit it.
+*.jks
+keystore.properties
+# The owner's handoff and private notes stay on the laptop: this repo is meant to go public.
+dropoff.md
+.privacy-terms
+# Test screenshots show game artwork, so they never go in the repo (tests skip without them).
+app/src/test/resources/screens/

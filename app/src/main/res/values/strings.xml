@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">IV Lens</string>
+    <string name="channel_bubble">Scanner bubble</string>
+    <string name="notif_title">IV Lens bubble is on</string>
+    <string name="notif_text">Tap the bubble on a Pokémon\'s screen.</string>
+    <string name="stop">Stop</string>
+    <string name="bubble_desc">Scan this Pokémon</string>
+    <string name="bubble_stopped">IV Lens bubble turned off</string>
+    <string name="capture_failed">Couldn\'t start screen capture. Try again from IV Lens.</string>
+    <string name="no_frame">Couldn\'t capture the screen yet. Try again in a second.</string>
+    <string name="scan_failed">Couldn\'t read this screen. Try again.</string>
+</resources>
