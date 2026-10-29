@@ -59,12 +59,12 @@ adb logcat -s IvLens                    # dev build only, with "Debug log" on in
   as the ID too: `./gradlew -PlegacyId :app:assembleRelease` builds that ID, to install over those
   copies and export their saved list. Drop the switch once the owner's phones have moved.
 - **Versions:** bump `versionCode` / `versionName` in `app/build.gradle.kts` for every build handed
-  to the owner. The current version is **26 / 1.25**. Settings shows the installed version at the
+  to the owner. The current version is **27 / 1.26**. Settings shows the installed version at the
   bottom.
 - **Release build:** R8 is on (minify + shrinkResources) with `-dontobfuscate`. The build is arm64
   only (`abiFilters`).
 - **Dev build** (1.25): the debug build is its own app, "IV Lens dev" (ID + `.dev`, version
-  `1.25-dev`, signed with the SDK's debug key), so it installs next to the copy from Play, which a
+  name + `-dev`, signed with the SDK's debug key), so it installs next to the copy from Play, which a
   laptop-signed build can't update. It has its own saved list and permissions. It's the only build
   with the Debug log (`BuildConfig.DEBUG`). It runs a little slower and skips R8, so a release is
   still checked last as a release build or through Play's internal test.
@@ -251,6 +251,9 @@ Each of these fixes a real failure. Keep them unless a test shows they're wrong.
     (`AppraisalFit.misreadCp`; `MisreadCpTest`). A CP that fits some IVs is never overruled, and
     the level arc, if read, must agree. Rules on the digits read (one, then two digits off) were
     tried first; each new misread broke them. An Electrike's 410 read as 10 was the same.
+  - 1.26: the arc only has to agree to within a half level. Another Drifblim with a hat (CP 345
+    read as 45, HP 101, 600 stardust, bars 4/3/4; 2026-10-29) is Lv 6, and its arc read as 5.5
+    (see "Level arc"), so its bars were refused. An arc a whole level off still refuses them.
   - Swiped away and back, the CP came out garbled a new way, so the appraisal kept under the CP
     read before wasn't found and the CP had to be typed. Appraisals are now also kept under the
     hidden-CP key (species|null|HP|weight; `AppraisalFit.memoryKeys`), and a read whose CP fits no
@@ -268,13 +271,19 @@ Each of these fixes a real failure. Keep them unless a test shows they're wrong.
   (`CollectionStore.removeAll`). Back leaves picking.
 - **Debug log** (Settings, off by default; since 1.25 only in the dev build, so the Play build
   writes nothing to the phone's log): `log()` writes to `adb logcat -s IvLens`. It covers each
-  auto-read (species, CP, HP, dust, combo count, [Shadow] / [Lucky] and the text that said LUCKY),
-  the bars seen and whether they fit, and why the chip was hidden.
+  auto-read (species, CP, HP, dust, the arc's level since 1.26, combo count, [Shadow] / [Lucky] and
+  the text that said LUCKY), the bars seen and whether they fit, and why the chip was hidden.
 - **Level arc:** candidate dots are scored by "solid line to the left, translucent to the right",
   so sparkles on the faint part are ignored.
   - If the arc disagrees with CP/HP/dust, `recheckArc()` re-reads it from one or two fresh frames.
   - Geometry defaults to r = 0.4096w, cy = 0.638w. The last confident fit is remembered per screen
     size (prefs "arc").
+  - **Calibration** (`ANGLE_L1`, `SPAN`; the dot's angle is linear in the CP multiplier): fitted on
+    Pokémon at Lv 17–32.5, all on the right half of the arc, where it's within 0.3°. The first one
+    on the left half, the hatted Drifblim at Lv 6 (`drifblim_hat`, 2026-10-29), sits 2° off (125.1°
+    read, 123.1° expected), which is half a level there. A refit with it (179.4 / 179.6) keeps every
+    point within 0.4°, but moves the untested Lv 35–50 end by about half a degree, so it waits for
+    screenshots at low and high levels. Nothing above Lv 32.5 has been checked yet.
 - **Chip placement:** the default spot is centred inside the arc over the Pokémon. Prefs "mini"
   hold the keys `x2`/`y2`; the owner has dragged it lower, above the name.
   - The chip's area is excluded from the fingerprint and the arc. OCR lines are dropped only if

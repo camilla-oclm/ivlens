@@ -167,6 +167,10 @@ class OverlayService : LifecycleService(), SavedStateRegistryOwner, OverlayActio
         if (BuildConfig.DEBUG && graph.settings.state.value.debugLog) Log.d("IvLens", msg)
     }
 
+    /** " arc 5.5/6", the levels the arc was read at, for the debug log; empty when it wasn't read. */
+    private fun arcText(i: CalcInput): String =
+        i.levelHint?.takeIf { it.isNotEmpty() }?.joinToString("/", prefix = " arc ") { Levels.label(it) } ?: ""
+
     private fun OverlayState.named(): OverlayState {
         val gd = graph.gameData
         return copy(moveNames = (listOfNotNull(input.fast) + input.charged).mapNotNull { gd.moveById[it]?.name })
@@ -263,7 +267,7 @@ class OverlayService : LifecycleService(), SavedStateRegistryOwner, OverlayActio
             // Bars that fit neither the page behind nor the chip's Pokémon: say so, rather than nothing.
             val i = outcome.input
             val base = (if (i.speciesId != null && i.cp != null && i.hp != null) buildState(outcome) else null) ?: miniFull
-            log("bars ${ap.ivText} don't fit ${base?.input?.let { "${it.speciesId} CP ${it.cp} HP ${it.hp}" } ?: "any Pokémon read"}")
+            log("bars ${ap.ivText} don't fit ${base?.input?.let { "${it.speciesId} CP ${it.cp} HP ${it.hp}${arcText(it)}" } ?: "any Pokémon read"}")
             miniFull = base?.copy(bars = ap, appraised = false)
             miniState.value = miniFull?.let { miniFor(it) }
                 ?: MiniState(null, "CHECK", "BARS", "Bars ${ap.ivText}", "Couldn't tell which Pokémon. Open its page first.")
@@ -776,7 +780,7 @@ class OverlayService : LifecycleService(), SavedStateRegistryOwner, OverlayActio
             var outcome = rd.read(bmp, loadGeometry(), rects)
             outcome.arc?.let { if (it.coverage >= ArcReader.CONFIDENT_COVERAGE) saveGeometry(it.geometry) }
             val reading = outcome.reading
-            log("auto: ${outcome.input.speciesId} CP ${outcome.input.cp} HP ${outcome.input.hp} dust ${outcome.input.dust}: " +
+            log("auto: ${outcome.input.speciesId} CP ${outcome.input.cp} HP ${outcome.input.hp} dust ${outcome.input.dust}${arcText(outcome.input)}: " +
                 "${outcome.result?.combos?.size ?: 0} combos${outcome.problem?.let { " ($it)" } ?: ""}" + flags(outcome.input, reading))
             val old = miniFull
             outcome.appraisal?.let { ap ->

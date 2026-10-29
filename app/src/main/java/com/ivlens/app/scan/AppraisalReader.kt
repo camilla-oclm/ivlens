@@ -226,7 +226,10 @@ object AppraisalFit {
      * CP 223, read as "23", "29", "290", "292" and "293" at HP 82, where no IVs fit at all (the
      * Electrike's 410 read as 10 was the same). Such a CP says nothing, so it's worked out as for a
      * hidden one. Rules on the digits read were tried first and each new misread broke them. A CP
-     * that fits some IVs is never overruled, and the level arc, if read, must agree.
+     * that fits some IVs is never overruled, and the level arc, if read, must agree to within a half
+     * level (1.26): at low levels the dot can sit 2° from where the calibration puts it, a whole
+     * half level there. Another Drifblim (CP 345 hidden by its hat, read as 45; Lv 6, arc read
+     * as 5.5) had its bars refused for that.
      */
     private fun misreadCp(calc: com.ivlens.app.core.IvCalculator, input: com.ivlens.app.core.CalcInput, ap: Appraisal, maxLevel: Int):
         Pair<com.ivlens.app.core.CalcResult, com.ivlens.app.core.IvCombo>? {
@@ -236,7 +239,7 @@ object AppraisalFit {
         val result = calc.calculate(input.copy(cp = cp), maxLevel) ?: return null
         val combo = result.combos.firstOrNull { it.atk == ap.atk && it.def == ap.def && it.sta == ap.sta } ?: return null
         val arc = input.levelHint.orEmpty()
-        return (result to combo).takeIf { arc.isEmpty() || combo.level in arc }
+        return (result to combo).takeIf { arc.isEmpty() || arc.any { abs(it - combo.level) <= 1 } }
     }
 
     /**

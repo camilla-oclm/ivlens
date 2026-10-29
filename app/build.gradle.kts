@@ -22,8 +22,8 @@ android {
         applicationId = if (project.hasProperty("legacyId")) "com.ivlens.app" else "com.plumcometlabs.ivlens"
         minSdk = 29
         targetSdk = 36
-        versionCode = 26
-        versionName = "1.25"
+        versionCode = 27
+        versionName = "1.26"
         // Pokémon GO only runs on 64-bit phones, so 32-bit libraries are left out.
         ndk { abiFilters += listOf("arm64-v8a") }
     }
