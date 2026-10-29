@@ -59,7 +59,7 @@ adb logcat -s IvLens                    # dev build only, with "Debug log" on in
   as the ID too: `./gradlew -PlegacyId :app:assembleRelease` builds that ID, to install over those
   copies and export their saved list. Drop the switch once the owner's phones have moved.
 - **Versions:** bump `versionCode` / `versionName` in `app/build.gradle.kts` for every build handed
-  to the owner. The current version is **27 / 1.26**. Settings shows the installed version at the
+  to the owner. The current version is **28 / 1.27**. Settings shows the installed version at the
   bottom.
 - **Release build:** R8 is on (minify + shrinkResources) with `-dontobfuscate`. The build is arm64
   only (`abiFilters`).
@@ -302,6 +302,9 @@ Each of these fixes a real failure. Keep them unless a test shows they're wrong.
   buttons (`StudioLinks`), opened with `LocalUriHandler`, so no internet permission is needed. The
   Discord invite must never expire: check it with
   `curl -s "https://discord.com/api/v10/invites/<code>?with_expiration=true"` (`expires_at` null).
+  - **Privacy policy** (1.27): a button above Licences opens `StudioLinks.PRIVACY`, the website's
+    copy of `docs/play/privacy-policy.md`. Play wants the policy linked in the app as well as in
+    Play Console (its privacy policy page says so); the app had no link until then.
 - **Settings tab** (1.22): Settings is its own tab next to Saved, in panels Look, Scanning, Verdicts
   and About. Before, it was a panel at the end of Scan.
 - **Appraise hint** (1.22): while several IVs still fit, the chip's first small line is "Appraise for

@@ -1,6 +1,6 @@
 # Google Play: listing and app content (2026-10-27, updated 2026-10-29)
 
-What to paste into Play Console for IV Lens 1.26 (`com.plumcometlabs.ivlens`). The files next to
+What to paste into Play Console for IV Lens 1.27 (`com.plumcometlabs.ivlens`). The files next to
 this one are the graphics: `icon-512.png` and `feature-graphic.png`, both made by
 `tools/make_icons.py`.
 
@@ -63,7 +63,8 @@ IV Lens is a fan-made tool. It isn't affiliated with, endorsed by or connected t
 ## App content (Policy › App content)
 
 - **Privacy policy:** `https://plumcometlabs.com/ivlens/privacy` (live since 2026-10-28). It's
-  word for word `privacy-policy.md`: change both together.
+  word for word `privacy-policy.md`: change both together. Play wants it linked inside the app
+  too: since 1.27, Settings › About › Privacy policy.
 - **App access:** all functionality is available without special access. Note for the
   reviewers: "The bubble reads Pokémon GO's Pokémon screens. Without the game, the Calc, Saved and
   Ranks tabs show what the app does."
@@ -97,11 +98,15 @@ IV Lens is a fan-made tool. It isn't affiliated with, endorsed by or connected t
 - **Play App Signing:** let Google make the app-signing key; `ivlens-release.jks` becomes the
   upload key. Builds signed on the laptop then can't update a copy installed from Play (and the
   other way round): uninstall first, after an export.
-- **Internal test first** (no review wait, up to 100 testers): upload the 1.26 `.aab`
-  (`./gradlew :app:bundleRelease`; versionCode 27), add the owner, install from Play, check it.
-  Then the closed test. Release name: `1.26`. Release notes (`<en-US>`): "First test build. Open a
-  Pokémon in the game with the bubble on, and IV Lens gives its IVs and a verdict. Tell us what it
-  gets wrong in #bug-reports on Discord."
+- **Internal test first** (no review wait, up to 100 testers): 1.26 (versionCode 27) went up on
+  2026-10-29 and installed from Play on the dev phone. Release notes (`<en-US>`): "First test
+  build. Open a Pokémon in the game with the bubble on, and IV Lens gives its IVs and a verdict.
+  Tell us what it gets wrong in #bug-reports on Discord."
+  - A tester account Play doesn't recognise yet gets "Item not found" in the Play Store even after
+    accepting the invite; another account that was on the list from the start worked at once.
+- **1.27** (versionCode 28) adds the in-app privacy policy link: the build for the closed test.
+  Release name: `1.27`. Release notes (`<en-US>`): "Settings › About now links to the privacy
+  policy."
 - **Closed test:** at least **12 testers opted in for 14 days in a row** (Google's help page,
   checked 2026-10-27); someone who leaves and rejoins starts their 14 days again. Recruit more than
   12. A Google Group as the tester list lets people join themselves; put the opt-in link in the

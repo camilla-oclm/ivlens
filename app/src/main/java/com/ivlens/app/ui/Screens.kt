@@ -414,6 +414,7 @@ fun SettingsContent(
                 style = blockText(12.sp, 500, Block.Muted),
                 modifier = Modifier.padding(top = 6.dp),
             )
+            BlockButton("Privacy policy", { open(StudioLinks.PRIVACY) }, Modifier.fillMaxWidth().padding(top = 8.dp), fill = Block.Paper, shadow = 2.dp)
             var licences by remember { mutableStateOf(false) }
             BlockButton("Licences", { licences = true }, Modifier.fillMaxWidth().padding(top = 8.dp), fill = Block.Paper, shadow = 2.dp)
             if (licences) LicencesDialog { licences = false }
