@@ -43,6 +43,7 @@ import androidx.savedstate.SavedStateRegistry
 import androidx.savedstate.SavedStateRegistryController
 import androidx.savedstate.SavedStateRegistryOwner
 import androidx.savedstate.setViewTreeSavedStateRegistryOwner
+import com.ivlens.app.BuildConfig
 import com.ivlens.app.R
 import com.ivlens.app.core.CalcInput
 import com.ivlens.app.core.IvCombo
@@ -161,9 +162,9 @@ class OverlayService : LifecycleService(), SavedStateRegistryOwner, OverlayActio
     /** Bars already matched to a Pokémon, so a still Appraise screen isn't read over and over. */
     private var handledBars: Appraisal? = null
 
-    /** What each read saw, for `adb logcat -s IvLens`; only with "Debug log" on in Settings. */
+    /** What each read saw, for `adb logcat -s IvLens`; only in the debug build, with "Debug log" on in Settings. */
     private fun log(msg: String) {
-        if (graph.settings.state.value.debugLog) Log.d("IvLens", msg)
+        if (BuildConfig.DEBUG && graph.settings.state.value.debugLog) Log.d("IvLens", msg)
     }
 
     private fun OverlayState.named(): OverlayState {

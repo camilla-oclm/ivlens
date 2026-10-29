@@ -75,6 +75,7 @@ import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.LifecycleEventEffect
+import com.ivlens.app.BuildConfig
 import com.ivlens.app.core.Nickname
 import com.ivlens.app.core.Pokedex
 import com.ivlens.app.core.VerdictKind
@@ -339,8 +340,11 @@ fun SettingsContent(
             SwitchRow("Read the level arc", "Uses the white dot above the Pokémon to pin down its level.", settings.useArc) { v ->
                 onSettings { it.copy(useArc = v) }
             }
-            SwitchRow("Debug log", "Notes what each read saw in the phone's log, to fix problems over a USB or Wi-Fi debugging link. Leave it off normally.", settings.debugLog) { v ->
-                onSettings { it.copy(debugLog = v) }
+            // Debug build only: the Play build writes nothing to the phone's log.
+            if (BuildConfig.DEBUG) {
+                SwitchRow("Debug log", "Notes what each read saw in the phone's log, to fix problems over a USB or Wi-Fi debugging link. Leave it off normally.", settings.debugLog) { v ->
+                    onSettings { it.copy(debugLog = v) }
+                }
             }
         }
 

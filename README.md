@@ -56,6 +56,7 @@ through `./gradlew` (its checksum is pinned), with AGP 8.13 and Kotlin 2.2.
 ./gradlew :app:testReleaseUnitTest   # logic tests
 ./gradlew :app:assembleRelease       # release APK (signed if keystore.properties is present)
 ./gradlew :app:bundleRelease         # .aab for Google Play
+./gradlew :app:assembleDebug         # "IV Lens dev": installs next to the release app, with a debug log
 ```
 
 - Without `keystore.properties` the release build is unsigned; sign it with your own key to install it.

@@ -34,6 +34,8 @@ The app will be published **free**, with **no ads, no purchases and no data coll
 - [ ] **Animated backgrounds** (special backgrounds, sparkles): the level arc is still read.
 - [x] **Add debug logging** (1.6): the Settings switch "Debug log", off by default. It logs each read,
   the Appraise bars and why the chip changed. Read it with `adb logcat -s IvLens`.
+  - [x] Only in the dev build (1.25): the debug build is its own app, "IV Lens dev", and the
+    Play build has no switch and writes nothing to the phone's log.
 - [ ] **Battery check:** an hour of play with the bubble on.
 - [ ] **Small-screen phone** (about 360 dp wide): chip text, card height, number pad.
 

@@ -22,8 +22,8 @@ android {
         applicationId = if (project.hasProperty("legacyId")) "com.ivlens.app" else "com.plumcometlabs.ivlens"
         minSdk = 29
         targetSdk = 36
-        versionCode = 25
-        versionName = "1.24"
+        versionCode = 26
+        versionName = "1.25"
         // Pokémon GO only runs on 64-bit phones, so 32-bit libraries are left out.
         ndk { abiFilters += listOf("arm64-v8a") }
     }
@@ -40,6 +40,12 @@ android {
     }
 
     buildTypes {
+        // The only build with the Debug log. It's its own app, "IV Lens dev", so it installs next to
+        // the copy from Play, which a laptop-signed build can't update.
+        debug {
+            applicationIdSuffix = ".dev"
+            versionNameSuffix = "-dev"
+        }
         release {
             isMinifyEnabled = true
             isShrinkResources = true
@@ -51,7 +57,7 @@ android {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
-    buildFeatures { compose = true }
+    buildFeatures { compose = true; buildConfig = true }
     packaging { resources.excludes += "/META-INF/{AL2.0,LGPL2.1}" }
     testOptions { unitTests.isReturnDefaultValues = true }
 }

@@ -36,7 +36,7 @@ data class AppSettings(
     val pvpSpeciesCutoff: Int = 100,
     val keepIv: Int = 82,
     val raidRankCutoff: Int = 30,
-    /** Notes each read in the phone's log (`adb logcat -s IvLens`), for fixing problems. */
+    /** Notes each read in the phone's log (`adb logcat -s IvLens`), for fixing problems; debug build only. */
     val debugLog: Boolean = false,
     val theme: ThemeMode = ThemeMode.PHONE,
 ) {

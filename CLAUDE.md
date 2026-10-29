@@ -44,8 +44,9 @@ anything personal in a tracked file or a commit message. `tools/privacy_scan.py`
 ./gradlew :app:testReleaseUnitTest      # all logic tests (screenshot ones only where screens/ exists)
 ./gradlew :app:assembleRelease          # signed APK -> app/build/outputs/apk/release/
 ./gradlew :app:bundleRelease            # .aab for Google Play
+./gradlew :app:assembleDebug            # "IV Lens dev" -> app/build/outputs/apk/debug/
 adb install -r app/build/outputs/apk/release/app-release.apk
-adb logcat -s IvLens                    # with "Debug log" on in the app's Settings
+adb logcat -s IvLens                    # dev build only, with "Debug log" on in its Settings
 ```
 
 - **Signing:** `ivlens-release.jks` plus `keystore.properties`. Both are git-ignored. Back them up
@@ -58,10 +59,15 @@ adb logcat -s IvLens                    # with "Debug log" on in the app's Setti
   as the ID too: `./gradlew -PlegacyId :app:assembleRelease` builds that ID, to install over those
   copies and export their saved list. Drop the switch once the owner's phones have moved.
 - **Versions:** bump `versionCode` / `versionName` in `app/build.gradle.kts` for every build handed
-  to the owner. The current version is **25 / 1.24**. Settings shows the installed version at the
+  to the owner. The current version is **26 / 1.25**. Settings shows the installed version at the
   bottom.
 - **Release build:** R8 is on (minify + shrinkResources) with `-dontobfuscate`. The build is arm64
   only (`abiFilters`).
+- **Dev build** (1.25): the debug build is its own app, "IV Lens dev" (ID + `.dev`, version
+  `1.25-dev`, signed with the SDK's debug key), so it installs next to the copy from Play, which a
+  laptop-signed build can't update. It has its own saved list and permissions. It's the only build
+  with the Debug log (`BuildConfig.DEBUG`). It runs a little slower and skips R8, so a release is
+  still checked last as a release build or through Play's internal test.
 
 ## How it works
 
@@ -260,7 +266,8 @@ Each of these fixes a real failure. Keep them unless a test shows they're wrong.
   starts picking. Taps then tick entries. A bar above the list (it stays in view) has ALL (every
   entry shown, so a search narrows it), NONE, DONE and DELETE, which asks first
   (`CollectionStore.removeAll`). Back leaves picking.
-- **Debug log** (Settings, off by default): `log()` writes to `adb logcat -s IvLens`. It covers each
+- **Debug log** (Settings, off by default; since 1.25 only in the dev build, so the Play build
+  writes nothing to the phone's log): `log()` writes to `adb logcat -s IvLens`. It covers each
   auto-read (species, CP, HP, dust, combo count, [Shadow] / [Lucky] and the text that said LUCKY),
   the bars seen and whether they fit, and why the chip was hidden.
 - **Level arc:** candidate dots are scored by "solid line to the left, translucent to the right",
