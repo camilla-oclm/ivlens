@@ -1,6 +1,6 @@
-# Google Play: listing and app content (draft, 2026-10-27)
+# Google Play: listing and app content (2026-10-27, updated 2026-10-29)
 
-What to paste into Play Console for IV Lens 1.24 (`com.plumcometlabs.ivlens`). The files next to
+What to paste into Play Console for IV Lens 1.26 (`com.plumcometlabs.ivlens`). The files next to
 this one are the graphics: `icon-512.png` and `feature-graphic.png`, both made by
 `tools/make_icons.py`.
 
@@ -10,8 +10,8 @@ this one are the graphics: `icon-512.png` and `feature-graphic.png`, both made b
 - **Short description** (80 max):
   `IVs, PvP ranks and raid value in one tap. Free: no ads, no account, no tracking.` (80)
 - **Category:** Tools. **Price:** Free. **Countries:** all.
-- **Contact email:** a studio address, never a personal one (see "Still to decide" in the
-  roadmap). **Website:** `https://plumcometlabs.com`.
+- **Contact email:** `info@plumcometlabs.com`, the studio's address (also in the privacy policy).
+  **Website:** `https://plumcometlabs.com`.
 - **Graphics:** `icon-512.png` (512×512), `feature-graphic.png` (1024×500, no alpha).
 - **Phone screenshots:** 2 to 8. Each side must be 320–3,840 px, and the long side at most twice
   the short one. The test phones (1080×2340 and 1200×2670) are both taller than 2:1, so crop
@@ -62,8 +62,8 @@ IV Lens is a fan-made tool. It isn't affiliated with, endorsed by or connected t
 
 ## App content (Policy › App content)
 
-- **Privacy policy:** `https://plumcometlabs.com/ivlens/privacy` once the website is up; the
-  text is `privacy-policy.md`.
+- **Privacy policy:** `https://plumcometlabs.com/ivlens/privacy` (live since 2026-10-28). It's
+  word for word `privacy-policy.md`: change both together.
 - **App access:** all functionality is available without special access. Note for the
   reviewers: "The bubble reads Pokémon GO's Pokémon screens. Without the game, the Calc, Saved and
   Ranks tabs show what the app does."
@@ -97,8 +97,11 @@ IV Lens is a fan-made tool. It isn't affiliated with, endorsed by or connected t
 - **Play App Signing:** let Google make the app-signing key; `ivlens-release.jks` becomes the
   upload key. Builds signed on the laptop then can't update a copy installed from Play (and the
   other way round): uninstall first, after an export.
-- **Internal test first** (no review wait, up to 100 testers): upload `ivlens-1.24.aab`, add the
-  owner, install from Play, check it. Then the closed test.
+- **Internal test first** (no review wait, up to 100 testers): upload the 1.26 `.aab`
+  (`./gradlew :app:bundleRelease`; versionCode 27), add the owner, install from Play, check it.
+  Then the closed test. Release name: `1.26`. Release notes (`<en-US>`): "First test build. Open a
+  Pokémon in the game with the bubble on, and IV Lens gives its IVs and a verdict. Tell us what it
+  gets wrong in #bug-reports on Discord."
 - **Closed test:** at least **12 testers opted in for 14 days in a row** (Google's help page,
   checked 2026-10-27); someone who leaves and rejoins starts their 14 days again. Recruit more than
   12. A Google Group as the tester list lets people join themselves; put the opt-in link in the

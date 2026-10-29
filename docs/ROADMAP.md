@@ -1,9 +1,9 @@
 # IV Lens roadmap: from here to Google Play
 
-Status (28 Oct 2026): 1.24 is the first Play build: the Play app ID, icon B, no internet access,
-saved-list export/import and a Licences screen. The listing drafts are in `docs/play/`. 1.24 was
-checked on the dev phone on 27 Oct. Next: the Plum Comet Labs website with the privacy policy, then
-the internal and closed tests.
+Status (29 Oct 2026): 1.26 is the build for Play. 1.24 brought the Play app ID, icon B, no internet
+access, saved-list export/import and a Licences screen; 1.25 kept the Debug log to the dev build;
+1.26 fixed a CP hidden under a hat. The listing is in `docs/play/`, and the website with the privacy
+policy is live (plumcometlabs.com). Next: the internal test, then the closed test.
 
 - **Scanning:** auto-scan with a verdict chip, plus a full card.
 - **Calculations:** PvP and raid verdicts, and waiting for moves.
@@ -86,9 +86,10 @@ The app will be published **free**, with **no ads, no purchases and no data coll
       Play developer name, the Discord server's name and the website, `plumcometlabs.com`.
 - [x] Discord server "Plum Comet Labs" (see `docs/discord.md`).
 - [x] Play developer account approved (2026-10-27).
-- [ ] **Still to decide** (the owner):
-  - The contact email Play shows publicly: a studio address, never a personal one.
-  - The tester list: a Google Group (testers join themselves) or emails typed into Play Console.
+- [x] **Contact email** Play shows publicly: `info@plumcometlabs.com`, the studio's address
+      (2026-10-28; also in the privacy policy).
+- [ ] **Still to decide** (the owner): the tester list, a Google Group (testers join themselves) or
+      emails typed into Play Console.
 
 **Testing gate (new personal accounts)**
 - [ ] Run a **closed test with at least 12 testers opted in for 14 days in a row**, then apply for
@@ -100,11 +101,11 @@ The app will be published **free**, with **no ads, no purchases and no data coll
 - Details and the production-access questions: `docs/play/listing.md` › Testing and release.
 
 **Build**
-- [x] `./gradlew :app:bundleRelease` produces a signed `.aab` (1.24). Opt in to Play App Signing;
-      the current keystore becomes the upload key.
+- [x] `./gradlew :app:bundleRelease` produces a signed `.aab` (1.26, 2026-10-29). Opt in to Play
+      App Signing; the current keystore becomes the upload key.
   - After that, a build signed by the owner can't update a copy installed from Play, and the other
-    way round: uninstall first (after an export). Sideloaded dev builds could later get their own
-    ID (`applicationIdSuffix ".dev"`) to sit next to the Play copy.
+    way round: uninstall first (after an export). Since 1.25 the dev build has its own ID
+    (`.dev`, "IV Lens dev"), so it sits next to the Play copy.
 - [x] Target the current required API level (36 today).
 
 **App content (Play Console › Policy › App content)** — the answers are drafted in

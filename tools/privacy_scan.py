@@ -35,9 +35,10 @@ CHECKS = {
 }
 
 # Text that may hold these on purpose: the licence notices name their authors (so their emails and
-# names aren't checked), and git's own noreply addresses sign the commits.
+# names aren't checked), git's own noreply addresses sign the commits, and the studio's address is
+# the public contact (privacy policy, Play listing).
 ALLOW = {
-    "email": re.compile(r"noreply@anthropic\.com|users\.noreply\.github\.com"),
+    "email": re.compile(r"noreply@anthropic\.com|users\.noreply\.github\.com|^info@plumcometlabs\.com$"),
     "ip address": re.compile(r"^(127\.0\.0\.1|0\.0\.0\.0)$"),
 }
 LICENCE_FILES = re.compile(r"(^|/)assets/licenses/|(^|/)LICENSE$")
