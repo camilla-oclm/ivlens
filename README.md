@@ -1,4 +1,4 @@
-# IV Lens
+<h1><a href="https://plumcometlabs.com/ivlens"><img src="docs/readme/banner.png" alt="IV Lens"></a></h1>
 
 A light companion for Pokémon GO on Android. A floating bubble reads the Pokémon on your screen and
 gives its IVs, PvP ranks, power-up costs and a straight verdict: **HUNDO, PVP, RAIDS, KEEP or
@@ -6,6 +6,19 @@ TRANSFER**. Everything runs on the phone.
 
 IV Lens is free, with no ads, no purchases, no account and no tracking. It has no internet access at
 all, so nothing it sees can leave your phone. Made by [Plum Comet Labs](https://plumcometlabs.com).
+
+<table>
+  <tr>
+    <td align="center" valign="top"><img src="docs/play/screenshots/1-chip.png" width="250" alt="Pokémon GO with the IV Lens chip showing a verdict over the Pokémon"><br><b>The chip</b><br>A verdict right over the game.</td>
+    <td align="center" valign="top"><img src="docs/play/screenshots/2-card.png" width="250" alt="The IV Lens card with IVs, level, PvP ranks and next steps"><br><b>The card</b><br>IVs, PvP ranks and plain next steps.</td>
+    <td align="center" valign="top"><img src="docs/play/screenshots/3-appraise.png" width="250" alt="IV Lens pinning the exact IVs from the game's Appraise screen"><br><b>Exact IVs</b><br>Pinned from the Appraise screen.</td>
+  </tr>
+  <tr>
+    <td align="center" valign="top"><img src="docs/play/screenshots/4-ranks.png" width="250" alt="The Ranks screen with the best raid attackers and PvP picks"><br><b>Ranks</b><br>Top raid attackers and PvP picks.</td>
+    <td align="center" valign="top"><img src="docs/play/screenshots/5-calc.png" width="250" alt="The IV Lens calculator with a result"><br><b>Calculator</b><br>Check any Pokémon by hand.</td>
+    <td align="center" valign="top"><img src="docs/play/screenshots/6-saved.png" width="250" alt="The saved list with filters"><br><b>Saved list</b><br>Filters, Auto save and export.</td>
+  </tr>
+</table>
 
 ## What it does
 

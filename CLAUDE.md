@@ -384,6 +384,12 @@ Each of these fixes a real failure. Keep them unless a test shows they're wrong.
   - The notification icon has its own bolder drawing (no faint track, a thicker arc, a larger IV):
     at 24 dp the first one was barely visible (the owner, on a phone). The notification is tinted
     Bold Block blue (`setColor`) for the shade.
+- **README banner** (2026-10-29, the owner's pick over Play's yellow feature graphic):
+  `docs/readme/banner.png` is the top of `plumcometlabs.com/ivlens`, captured with headless Chromium
+  (`--force-prefers-reduced-motion --force-device-scale-factor=1.5 --window-size=1280,640`; with
+  motion the title is caught mid fade-in) and cropped to rows 88–287 at 1×. Remake it if the site's
+  header changes. Below the intro, the six Play screenshots sit in a 3×2 table with the website's
+  captions.
 - **Game language:** the reader expects the game in English (POWER UP, PURIFY, LUCKY, English names).
   Other languages would need their own words and names; until then the Play listing should say so.
 
