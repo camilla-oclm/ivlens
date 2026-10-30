@@ -8,7 +8,7 @@ The owner tests each build in the game on their phones and reports back with scr
 `docs/ROADMAP.md` has the next steps and the Google Play checklist. Read it before starting work.
 Icon and name candidates are in `docs/brand/`; the Play listing drafts and graphics in `docs/play/`.
 
-**This repo is meant to go public.** Where things stand, the owner's laptop and phone setup and the
+**This repo is public** (since 2026-10-30). Where things stand, the owner's laptop and phone setup and the
 private notes live in `dropoff.md`, which is git-ignored and exists only on the owner's laptop: read
 it first when it's there. Never put handoff notes, machine names, home paths, the owner's devices or
 anything personal in a tracked file or a commit message. `tools/privacy_scan.py` checks for that.
