@@ -20,6 +20,17 @@ all, so nothing it sees can leave your phone. Made by [Plum Comet Labs](https://
   </tr>
 </table>
 
+## Get it
+
+IV Lens is in a closed test on Google Play, before its public release. It needs Android 10 or
+newer, with the game set to English. To join the test:
+
+1. Join the tester group with the Google account on your phone:
+   [groups.google.com/g/ivlens-testers](https://groups.google.com/g/ivlens-testers).
+2. Become a tester: [play.google.com/apps/testing/com.plumcometlabs.ivlens](https://play.google.com/apps/testing/com.plumcometlabs.ivlens).
+3. Install IV Lens from Google Play, and keep it for at least 14 days: Google needs that before the
+   public release.
+
 ## What it does
 
 - **Auto-scan chip.** Open a Pokémon and a small chip gives the verdict by itself: HUNDO, PVP (with
