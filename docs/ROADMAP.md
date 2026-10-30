@@ -1,9 +1,11 @@
 # IV Lens roadmap: from here to Google Play
 
-Status (29 Oct 2026): 1.26 is the build for Play. 1.24 brought the Play app ID, icon B, no internet
-access, saved-list export/import and a Licences screen; 1.25 kept the Debug log to the dev build;
-1.26 fixed a CP hidden under a hat. The listing is in `docs/play/`, and the website with the privacy
-policy is live (plumcometlabs.com). Next: the internal test, then the closed test.
+Status (30 Oct 2026): 1.27 is on Google Play as a closed test (approved 29 Oct), after an internal
+test of 1.26 and 1.27. 1.24 brought the Play app ID, icon B, no internet access, saved-list
+export/import and a Licences screen; 1.25 kept the Debug log to the dev build; 1.26 fixed a CP
+hidden under a hat; 1.27 links the privacy policy in Settings. The listing is in `docs/play/`, the
+website with the privacy policy is live (plumcometlabs.com), and this repo is public since 30 Oct.
+Next: 12 or more testers for 14 days in a row, then production.
 
 - **Scanning:** auto-scan with a verdict chip, plus a full card.
 - **Calculations:** PvP and raid verdicts, and waiting for moves.
@@ -76,8 +78,8 @@ The app will be published **free**, with **no ads, no purchases and no data coll
   words are explained in the Scan tab since 1.9 ("What the chip says"); the tour could reuse it.
 - [ ] **Languages:** only an English game client is parsed today. Say so in the listing, or add
   other languages later.
-- [x] **Open source** (2026-10-28): MIT licence, and a repo ready to go public once the app and the
-  website are out (`tools/privacy_scan.py` must say "clean" first).
+- [x] **Open source** (2026-10-28): MIT licence. The repo went public on 2026-10-30, once
+  `tools/privacy_scan.py` said "clean", and the IV Lens page on plumcometlabs.com links to it.
 
 ## 3. Google Play checklist (free app, no ads)
 
@@ -88,45 +90,50 @@ The app will be published **free**, with **no ads, no purchases and no data coll
 - [x] Play developer account approved (2026-10-27).
 - [x] **Contact email** Play shows publicly: `info@plumcometlabs.com`, the studio's address
       (2026-10-28; also in the privacy policy).
-- [ ] **Still to decide** (the owner): the tester list, a Google Group (testers join themselves) or
-      emails typed into Play Console.
+- [x] **Tester list: a Google Group** (2026-10-29), so testers join themselves:
+      `groups.google.com/g/ivlens-testers`. The closed test points at it.
 
 **Testing gate (new personal accounts)**
 - [ ] Run a **closed test with at least 12 testers opted in for 14 days in a row**, then apply for
       production access from the dashboard. Checked on Google's help page on 2026-10-27; a tester
       who opts out and back in starts their 14 days again, so recruit more than 12.
-- [ ] Each tester needs a Google account and must opt in through the test link. Discord's
-      `#testers` is ready for the link.
-- [ ] An internal test first (no review wait) to check the upload and install from Play.
+  - The closed test "Alpha" was approved on 2026-10-29: 1.27, all countries, feedback through
+    Discord's #bug-reports.
+- [x] Each tester needs a Google account, joins the group and opts in through the test link
+      (`play.google.com/apps/testing/com.plumcometlabs.ivlens`). The README's "Get it" section has
+      the three steps.
+- [x] An internal test first (2026-10-29): 1.26, then 1.27, installed from Play and signed with
+      Google's app-signing key.
 - Details and the production-access questions: `docs/play/listing.md` › Testing and release.
 
 **Build**
-- [x] `./gradlew :app:bundleRelease` produces a signed `.aab` (1.26, 2026-10-29). Opt in to Play
-      App Signing; the current keystore becomes the upload key.
+- [x] `./gradlew :app:bundleRelease` produces a signed `.aab` (1.26 and 1.27, 2026-10-29). Play
+      App Signing is on: the current keystore is the upload key.
   - After that, a build signed by the owner can't update a copy installed from Play, and the other
     way round: uninstall first (after an export). Since 1.25 the dev build has its own ID
     (`.dev`, "IV Lens dev"), so it sits next to the Play copy.
 - [x] Target the current required API level (36 today).
 
-**App content (Play Console › Policy › App content)** — the answers are drafted in
-`docs/play/listing.md`.
-- [ ] Privacy policy URL: `https://plumcometlabs.com/ivlens/privacy` (the text is
+**App content (Play Console › Policy › App content)** — all filed on 2026-10-29, with the answers
+in `docs/play/listing.md`.
+- [x] Privacy policy URL: `https://plumcometlabs.com/ivlens/privacy` (the text is
       `docs/play/privacy-policy.md`). It says:
   - the screen is captured only while the bubble is on;
   - images are processed on the phone and never stored or sent;
   - saved Pokémon stay on the device;
   - the app has no internet access (1.24), so ML Kit sends nothing.
-- [ ] Ads: **No ads**.
-- [ ] Data safety: no data collected or shared (INTERNET is removed since 1.24).
-- [ ] Content rating questionnaire. It's a utility, so expect "Everyone".
-- [ ] Target audience: 13+ (not designed for children, which keeps it out of Families policy).
-- [ ] **Foreground service declaration** (needed because the app targets Android 14+):
+- [x] Ads: **No ads**.
+- [x] Data safety: no data collected or shared (INTERNET is removed since 1.24).
+- [x] Content rating questionnaire. It's a utility, so expect "Everyone".
+- [x] Target audience: 13+ (not designed for children, which keeps it out of Families policy).
+- [x] **Foreground service declaration** (needed because the app targets Android 14+):
   - type **mediaProjection**;
   - describe the feature: screen reading for IV calculation while the user plays;
   - say what happens if it's interrupted;
   - link a short video showing the user starting the bubble and accepting Android's
     screen-capture prompt.
-  - This is the review step most likely to need a back-and-forth.
+  - Filed with the description in `docs/play/listing.md` and a demo video, unlisted on the
+    studio's YouTube channel. The closed test's review passed with it.
 - [ ] Be ready to explain "Display over other apps" (the bubble and chip).
 
 **Store listing**
@@ -137,8 +144,8 @@ The app will be published **free**, with **no ads, no purchases and no data coll
     "Poke", but that's its risk.
   - Searches for "pokemon go" are owned by the official apps and 10M+ apps: no title wins those.
     Installs and ratings (the closed-test testers) move the ranking.
-- [ ] Short description (≤ 80 characters) and full description. Both drafted in
-      `docs/play/listing.md` (2026-10-27), for the owner to read over.
+- [x] Short description (≤ 80 characters) and full description, in Play since 2026-10-29 from
+      `docs/play/listing.md`.
   - Draft short description (80): "IVs, PvP ranks and raid value in one tap. Free: no ads, no account,
     no tracking."
   - The full description may say what it works with ("an IV checker for Pokémon GO trainers") a
@@ -148,13 +155,18 @@ The app will be published **free**, with **no ads, no purchases and no data coll
 - [x] Icon: 512×512 PNG (`docs/play/icon-512.png`, 1.24).
 - [x] Feature graphic: 1024×500, no alpha (`docs/play/feature-graphic.png`, 1.24): the icon, the
       name, one line and the verdict words in Bold Block, no game art.
-- [ ] At least 2 phone screenshots. Prefer the app's own screens (Scan tab, calculator, saved list,
-      Ranks, the chip and card). Avoid game artwork filling the frame. Both test phones are taller
-      than Play's 2:1 limit, so crop them (see `docs/play/listing.md`).
-- [ ] Category: Tools (or Entertainment). Price: Free. Countries: all.
+- [x] At least 2 phone screenshots: six since 2026-10-28 (`docs/play/screenshots/`). Prefer the
+      app's own screens (Scan tab, calculator, saved list, Ranks, the chip and card). Avoid game
+      artwork filling the frame. Both test phones are taller than Play's 2:1 limit, so crop them
+      (see `docs/play/listing.md`).
+- [x] Category: Tools. Price: Free. Countries: all.
+- [x] AI-generated content: "Don't label". The screenshots are real, and the icon and feature
+      graphic are drawn by a script.
 
 **Release**
-- [ ] Closed test, then production. Watch pre-launch reports and Android vitals for crashes.
+- [x] Closed test, live since 2026-10-29.
+- [ ] Production, once 12 testers have stayed opted in for 14 days. Watch pre-launch reports and
+      Android vitals for crashes.
 
 ## 4. Risks to keep in mind (not legal advice)
 
