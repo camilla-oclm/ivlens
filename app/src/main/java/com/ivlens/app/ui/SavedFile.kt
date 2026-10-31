@@ -29,7 +29,9 @@ fun savedFileName(now: Date = Date()): String = "ivlens-saved-${SimpleDateFormat
  */
 suspend fun exportSaved(context: Context, uri: Uri, items: List<SavedMon>): String = withContext(Dispatchers.IO) {
     runCatching {
-        context.contentResolver.openOutputStream(uri, "w")!!.use { it.write(encodeSavedFile(items, System.currentTimeMillis()).toByteArray()) }
+        // "wt": some file apps don't truncate on "w", so an export over an older, longer file kept
+        // the old file's tail after the new JSON, and no longer imported (1.28).
+        context.contentResolver.openOutputStream(uri, "wt")!!.use { it.write(encodeSavedFile(items, System.currentTimeMillis()).toByteArray()) }
     }.fold({ "Exported ${items.size} Pokémon." }, { "Couldn't write the file." })
 }
 

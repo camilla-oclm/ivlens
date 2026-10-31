@@ -5,7 +5,9 @@ test of 1.26 and 1.27. 1.24 brought the Play app ID, icon B, no internet access,
 export/import and a Licences screen; 1.25 kept the Debug log to the dev build; 1.26 fixed a CP
 hidden under a hat; 1.27 links the privacy policy in Settings. The listing is in `docs/play/`, the
 website with the privacy policy is live (plumcometlabs.com), and this repo is public since 30 Oct.
-Next: 12 or more testers for 14 days in a row, then production.
+Next: 12 or more testers for 14 days in a row, then production. 1.28 (29) carries four fixes from a
+code review (saved list writes, export truncation, CHECK · BARS behind Appraise, chip after a failed
+bubble tap; see CLAUDE.md "1.28 fixes") and waits for the phone checks below.
 
 - **Scanning:** auto-scan with a verdict chip, plus a full card.
 - **Calculations:** PvP and raid verdicts, and waiting for moves.
@@ -38,7 +40,22 @@ The app will be published **free**, with **no ads, no purchases and no data coll
   the Appraise bars and why the chip changed. Read it with `adb logcat -s IvLens`.
   - [x] Only in the dev build (1.25): the debug build is its own app, "IV Lens dev", and the
     Play build has no switch and writes nothing to the phone's log.
-- [ ] **Battery check:** an hour of play with the bubble on.
+- [ ] **Battery check:** an hour of play with the bubble on. Mostly off the Pokémon page (map,
+  battles): the bar search runs every 400 ms there, copying the lower-left region of each frame. If
+  it costs too much, slow it to every 2 s once the 15 s page timer has expired (`tick()`).
+- [ ] **1.28 fixes, on both phones:**
+  - [ ] A Shadow swiped to while on the Appraise screen, bars read, CP typed on the CHECK · BARS
+    card: the card's dust is "—", SHADOW is on, and the verdict is a Shadow's (RAIDS where it was
+    TRANSFER before 1.11's Rhyhorn).
+  - [ ] Export over an older, longer export file (pick it in the file dialog and confirm the
+    overwrite), then Import that file: it imports, no "isn't an IV Lens saved list".
+  - [ ] Tap the bubble on a page that reads badly (CP hidden, or mid-animation), close the card:
+    the chip comes back once the page settles, instead of staying away until the next swipe.
+  - [ ] Auto save on: save, delete and save again in quick succession, force-stop the app, reopen:
+    Saved shows the last state.
+  - [ ] On an Android 16 phone: "Wrong read? Report it" and OPEN IN APP from the card open the app
+    (they start an activity from the service; `adb logcat -s ActivityTaskManager` says
+    "Background activity launch blocked" if not).
 - [ ] **Small-screen phone** (about 360 dp wide): chip text, card height, number pad.
 
 ## 2. Product polish before release

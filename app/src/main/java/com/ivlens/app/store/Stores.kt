@@ -5,16 +5,16 @@ import com.ivlens.app.core.CalcInput
 import com.ivlens.app.core.IvCombo
 import com.ivlens.app.core.Levels
 import com.ivlens.app.core.VerdictRules
+import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.sync.Mutex
-import kotlinx.coroutines.sync.withLock
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.json.Json
@@ -167,19 +167,39 @@ fun mergeSaved(current: List<SavedMon>, imported: List<SavedMon>): SavedMerge {
     return SavedMerge(out.sortedByDescending { it.savedAt }, added, updated)
 }
 
-class CollectionStore(context: Context) {
-    private val file = File(context.filesDir, "collection.json")
+/**
+ * The saved list, kept in `collection.json` in the app's files. One writer (1.28): the file is read
+ * first, and every change after that is written in the order it was made, the latest list each
+ * time. Before, each change launched its own write on the IO pool, and two in a row (an auto save
+ * and a delete, say) could land in either order, leaving the older list on disk until the next
+ * change; a save made before the file was read was written over the list on its own.
+ */
+class CollectionStore(private val file: File, scope: CoroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)) {
+    constructor(context: Context) : this(File(context.filesDir, "collection.json"))
+
     private val json = Json { ignoreUnknownKeys = true }
     private val serializer = ListSerializer(SavedMon.serializer())
-    private val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
-    private val mutex = Mutex()
     private val _items = MutableStateFlow<List<SavedMon>>(emptyList())
     val items: StateFlow<List<SavedMon>> = _items.asStateFlow()
 
+    /** Each change bumps [changes]; the writer catches up and notes in [onDisk] the last change written. */
+    private val changes = MutableStateFlow(0L)
+    private val onDisk = MutableStateFlow(0L)
+    private val loaded = CompletableDeferred<Unit>()
+
     init {
         scope.launch {
-            val loaded = runCatching { json.decodeFromString(serializer, file.readText()) }.getOrDefault(emptyList())
-            _items.update { current -> (loaded + current).distinctBy { it.id } }
+            val fromDisk = runCatching { json.decodeFromString(serializer, file.readText()) }.getOrDefault(emptyList())
+            // A save made in the meantime is merged, and then written after the file, never over it.
+            _items.update { current -> (fromDisk + current).distinctBy { it.id } }
+            loaded.complete(Unit)
+            changes.collect { n ->
+                if (n > onDisk.value) {
+                    // A failed write (no space) is noted as done too, so the next change tries again.
+                    runCatching { write(_items.value) }
+                    onDisk.value = n
+                }
+            }
         }
     }
 
@@ -207,13 +227,19 @@ class CollectionStore(context: Context) {
     }
 
     private fun persist() {
-        val snapshot = _items.value
-        scope.launch {
-            mutex.withLock {
-                val tmp = File(file.parentFile, "collection.json.tmp")
-                tmp.writeText(json.encodeToString(serializer, snapshot))
-                tmp.renameTo(file)
-            }
-        }
+        changes.update { it + 1 }
+    }
+
+    private fun write(items: List<SavedMon>) {
+        val tmp = File(file.parentFile, "${file.name}.tmp")
+        tmp.writeText(json.encodeToString(serializer, items))
+        tmp.renameTo(file)
+    }
+
+    /** Waits until the file has been read and every change made so far is on disk (for tests). */
+    internal suspend fun flush() {
+        loaded.await()
+        val n = changes.value
+        onDisk.first { it >= n }
     }
 }

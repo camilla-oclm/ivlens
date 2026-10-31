@@ -59,7 +59,7 @@ adb logcat -s IvLens                    # dev build only, with "Debug log" on in
   as the ID too: `./gradlew -PlegacyId :app:assembleRelease` builds that ID, to install over those
   copies and export their saved list. Drop the switch once the owner's phones have moved.
 - **Versions:** bump `versionCode` / `versionName` in `app/build.gradle.kts` for every build handed
-  to the owner. The current version is **28 / 1.27**. Settings shows the installed version at the
+  to the owner. The current version is **29 / 1.28**. Settings shows the installed version at the
   bottom.
 - **Release build:** R8 is on (minify + shrinkResources) with `-dontobfuscate`. The build is arm64
   only (`abiFilters`).
@@ -288,8 +288,9 @@ Each of these fixes a real failure. Keep them unless a test shows they're wrong.
   hold the keys `x2`/`y2`; the owner has dragged it lower, above the name.
   - The chip's area is excluded from the fingerprint and the arc. OCR lines are dropped only if
     their **centre** is under the chip.
-- **Hidden CP:** retries every 2 s up to 4 times. After that, the card opens with the number pad
-  on CP.
+- **Hidden CP:** retries every 2 s up to 4 times. After that the chip stays on **CP? · HIDDEN**,
+  and a tap opens the card with the number pad on CP. (Until 1.28 this note said the card opened by
+  itself; it never did.)
 - **Number pad cursor** (1.20): a tap on the number moves the cursor between the nearest digits
   (`getOffsetForPosition` on the number text), and digits and ⌫ work there (`NumberInput`).
   Before, only the last digit could be deleted: the owner had to retype a whole CP to fix one digit.
@@ -395,6 +396,19 @@ Each of these fixes a real failure. Keep them unless a test shows they're wrong.
   captions.
 - **Game language:** the reader expects the game in English (POWER UP, PURIFY, LUCKY, English names).
   Other languages would need their own words and names; until then the Play listing should say so.
+- **1.28 fixes** (from a code review on 2026-10-31; see `docs/ROADMAP.md` for the phone checks):
+  - **Saved list on disk:** `CollectionStore` has one writer, which reads the file first and then
+    writes every change in order, the latest list each time (`CollectionStoreTest`). Before, each
+    change launched its own write on the IO pool, and two in a row (an auto save, then a delete)
+    could land in either order; a save made before the file was read was written over the list.
+  - **Export** opens the file with "wt". With "w", some file apps don't truncate, so an export
+    over an older, longer file kept the old tail after the JSON and no longer imported.
+  - **CHECK · BARS behind the Appraise screen:** bars that fit nothing are shown as the Pokémon
+    read behind the Appraise screen (`behindAppraise`, as the fit itself does), so a Shadow seen
+    only there isn't shown plain and judged plain once its CP is typed on the card.
+  - **Bubble tap that reads badly:** `close()` clears `scannedSample` when the card's read had no
+    HP or species, so the panel is read again. Before, it counted as already read, and the chip
+    stayed away until the screen changed.
 
 ## Tests and fixtures
 

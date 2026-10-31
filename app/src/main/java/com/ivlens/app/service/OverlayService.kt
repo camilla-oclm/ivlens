@@ -266,7 +266,10 @@ class OverlayService : LifecycleService(), SavedStateRegistryOwner, OverlayActio
         if (next == null) {
             // Bars that fit neither the page behind nor the chip's Pokémon: say so, rather than nothing.
             val i = outcome.input
-            val base = (if (i.speciesId != null && i.cp != null && i.hp != null) buildState(outcome) else null) ?: miniFull
+            // Built as behind the Appraise screen (no stardust, the kind from earlier reads), like the
+            // fit above: before 1.28 a Shadow seen only there came out plain here, and stayed plain
+            // once its CP was fixed on the card.
+            val base = (if (i.speciesId != null && i.cp != null && i.hp != null) buildState(behindAppraise(outcome)) else null) ?: miniFull
             log("bars ${ap.ivText} don't fit ${base?.input?.let { "${it.speciesId} CP ${it.cp} HP ${it.hp}${arcText(it)}" } ?: "any Pokémon read"}")
             miniFull = base?.copy(bars = ap, appraised = false)
             miniState.value = miniFull?.let { miniFor(it) }
@@ -1051,11 +1054,17 @@ class OverlayService : LifecycleService(), SavedStateRegistryOwner, OverlayActio
         val s = state.value
         hideCard()
         state.value = null
-        // Bring the chip back, reflecting any fixes made on the card.
-        if (autoJob != null && s != null && s.input.hp != null && s.input.speciesId != null) {
+        if (autoJob == null) return
+        if (s != null && s.input.hp != null && s.input.speciesId != null) {
+            // Bring the chip back, reflecting any fixes made on the card.
             miniFull = s
             miniState.value = miniFor(s)
             showMini()
+        } else {
+            // The card's read failed (a bubble tap on a page that read badly): read the panel again
+            // rather than show nothing. Before 1.28 the panel counted as already read, so the chip
+            // stayed away until the screen changed.
+            scannedSample = null
         }
     }
 
